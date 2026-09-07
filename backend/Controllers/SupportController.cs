@@ -82,6 +82,24 @@ public class SupportController : ControllerBase
         return Ok(ApiResponse<object>.Ok(new { filePath = result.FilePath }, "Attachment uploaded successfully."));
     }
 
+    [AllowAnonymous]
+    [HttpGet("community-links")]
+    public async Task<IActionResult> GetCommunityLinks([FromServices] ISettingsService settingsService)
+    {
+        var channel = await settingsService.GetSettingValueAsync("WhatsAppChannelUrl", "https://whatsapp.com/channel/0029VaNovyraOfficialChannel");
+        var admin = await settingsService.GetSettingValueAsync("WhatsAppAdminUrl", "https://wa.me/923001234567?text=Hello%20Novyra%20Admin%2C%20I%20need%20support");
+        var group = await settingsService.GetSettingValueAsync("WhatsAppGroupUrl", "https://chat.whatsapp.com/NovyraOfficialCommunityGroup");
+        var telegram = await settingsService.GetSettingValueAsync("TelegramCommunityUrl", "https://t.me/NovyraOfficialCommunity");
+
+        return Ok(ApiResponse<object>.Ok(new
+        {
+            channel,
+            admin,
+            group,
+            telegram
+        }));
+    }
+
     private long GetCurrentUserId()
     {
         var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? User.FindFirstValue("sub");

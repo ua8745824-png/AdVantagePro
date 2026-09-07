@@ -21,12 +21,27 @@ const UserDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [copiedLink, setCopiedLink] = useState(null);
 
-  // WhatsApp Community Links (Customizable / Configurable)
-  const whatsappLinks = {
+  // Default WhatsApp Community Links (Configurable via Admin Dashboard)
+  const defaultLinks = {
     channel: 'https://whatsapp.com/channel/0029VaNovyraOfficialChannel',
     admin: 'https://wa.me/923001234567?text=Hello%20Novyra%20Admin%2C%20I%20need%20support%20regarding%20my%20account',
     group: 'https://chat.whatsapp.com/NovyraOfficialCommunityGroup'
   };
+
+  const [whatsappLinks, setWhatsappLinks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('novyra_community_links');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          channel: parsed.channel || defaultLinks.channel,
+          admin: parsed.admin || defaultLinks.admin,
+          group: parsed.group || defaultLinks.group
+        };
+      }
+    } catch {}
+    return defaultLinks;
+  });
 
   const handleCopyLink = (key, url) => {
     navigator.clipboard.writeText(url);
@@ -37,15 +52,28 @@ const UserDashboard = () => {
   const loadDashboard = async () => {
     try {
       setLoading(true);
-      const [walletRes, txRes, tasksRes] = await Promise.all([
+      const [walletRes, txRes, tasksRes, linksRes] = await Promise.all([
         api.get('/wallet').catch(() => ({ data: { data: { availableBalance: 1250.00, reservedBalance: 0.00, todayEarnings: 150.00, totalEarned: 3450.00, referralEarnings: 450.00 } } })),
         api.get('/wallet/transactions?page=1&pageSize=6').catch(() => ({ data: { data: { items: [] } } })),
-        api.get('/tasks').catch(() => ({ data: { data: [] } }))
+        api.get('/tasks').catch(() => ({ data: { data: [] } })),
+        api.get('/support/community-links').catch(() => ({ data: { data: null } }))
       ]);
 
       if (walletRes.data?.data) setWallet(walletRes.data.data);
       if (txRes.data?.data?.items) setRecentTx(txRes.data.data.items);
       if (tasksRes.data?.data) setTasks(tasksRes.data.data);
+      
+      if (linksRes.data?.data) {
+        const links = linksRes.data.data;
+        const updated = {
+          channel: links.channel || defaultLinks.channel,
+          admin: links.admin || defaultLinks.admin,
+          group: links.group || defaultLinks.group
+        };
+        setWhatsappLinks(updated);
+        localStorage.setItem('novyra_community_links', JSON.stringify(updated));
+      }
+      
       if (refreshSummary) refreshSummary();
     } catch (err) {
       console.error('Failed to load dashboard:', err);
@@ -56,6 +84,30 @@ const UserDashboard = () => {
 
   useEffect(() => {
     loadDashboard();
+
+    // Listen for live link updates from Admin Dashboard
+    const handleLinksUpdated = () => {
+      try {
+        const saved = localStorage.getItem('novyra_community_links');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setWhatsappLinks((prev) => ({
+            ...prev,
+            channel: parsed.channel || prev.channel,
+            admin: parsed.admin || prev.admin,
+            group: parsed.group || prev.group
+          }));
+        }
+      } catch {}
+    };
+
+    window.addEventListener('novyra_community_links_updated', handleLinksUpdated);
+    window.addEventListener('storage', handleLinksUpdated);
+
+    return () => {
+      window.removeEventListener('novyra_community_links_updated', handleLinksUpdated);
+      window.removeEventListener('storage', handleLinksUpdated);
+    };
   }, []);
 
   const availableTasksCount = tasks.filter((t) => t.canStart).length || 8;

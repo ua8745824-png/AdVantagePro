@@ -43,7 +43,11 @@ public static class DbInitializer
                     new() { Key = "WithdrawalFixedFeePKR", Value = "0.00", Category = "Finance", Description = "Fixed administrative fee applied to withdrawals in PKR." },
                     new() { Key = "WithdrawalPercentageFee", Value = "0.00", Category = "Finance", Description = "Percentage fee applied to withdrawals." },
                     new() { Key = "MinDepositAmountPKR", Value = "100.00", Category = "Finance", Description = "Minimum deposit funding amount in PKR." },
-                    new() { Key = "PlatformMaintenanceMode", Value = "false", Category = "System", Description = "Set to 'true' to restrict non-admin access during maintenance windows." }
+                    new() { Key = "PlatformMaintenanceMode", Value = "false", Category = "System", Description = "Set to 'true' to restrict non-admin access during maintenance windows." },
+                    new() { Key = "WhatsAppChannelUrl", Value = "https://whatsapp.com/channel/0029VaNovyraOfficialChannel", Category = "Community", Description = "Official WhatsApp Channel URL for announcements and payout proofs." },
+                    new() { Key = "WhatsAppAdminUrl", Value = "https://wa.me/923001234567?text=Hello%20Novyra%20Admin%2C%20I%20need%20support", Category = "Community", Description = "Direct WhatsApp chat link with Admin support." },
+                    new() { Key = "WhatsAppGroupUrl", Value = "https://chat.whatsapp.com/NovyraOfficialCommunityGroup", Category = "Community", Description = "Official WhatsApp Community Group link for members." },
+                    new() { Key = "TelegramCommunityUrl", Value = "https://t.me/NovyraOfficialCommunity", Category = "Community", Description = "Official Telegram channel or support bot URL." }
                 };
                 await context.SystemSettings.AddRangeAsync(settings);
                 await context.SaveChangesAsync();
