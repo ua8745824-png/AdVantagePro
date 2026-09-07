@@ -159,24 +159,9 @@ const LoginPage = () => {
       />
 
       {/* Brand Header */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center z-10 px-4">
-        <Link to="/" className="inline-flex items-center gap-3 group focus:outline-none">
-          <NovyraLogo className="w-11 h-11 transition-transform group-hover:scale-105" />
-          <div className="flex flex-col text-left">
-            <span 
-              className="font-heading font-black text-2xl tracking-wider"
-              style={{
-                background: 'var(--theme-gradient-brand)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}
-            >
-              NOVYRA
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 -mt-0.5">
-              Verified Rewards & Tasks
-            </span>
-          </div>
+      <div className="sm:mx-auto sm:w-full sm:max-w-md flex justify-center text-center z-10 px-4">
+        <Link to="/" className="inline-flex items-center focus:outline-none">
+          <NovyraLogo size="lg" showText={true} showTagline={true} />
         </Link>
       </div>
 

@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import NovyraLogo from '../components/common/NovyraLogo';
 import { useAuth } from '../context/AuthContext';
 import LiveThemeSelector from '../components/common/LiveThemeSelector';
-import api from '../../src/services/api';
+import api from '../services/api';
 import {
   Shield, LayoutDashboard, Users, Megaphone, CheckSquare, 
   ArrowDownToLine, ArrowUpFromLine, Sliders, Settings, 
