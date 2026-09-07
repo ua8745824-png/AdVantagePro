@@ -31,18 +31,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Column 1: Brand */}
           <div className="space-y-4 md:col-span-1">
-            <Link to="/" className="flex items-center gap-3 group">
-              <NovyraLogo className="w-9 h-9" />
-              <span 
-                className="font-heading font-black text-2xl tracking-wider"
-                style={{
-                  background: 'var(--theme-gradient-brand)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
-                }}
-              >
-                NOVYRA
-              </span>
+            <Link to="/" className="flex items-center">
+              <NovyraLogo size="md" showText={true} />
             </Link>
             <p className="text-sm leading-relaxed" style={{ color: 'var(--theme-text-secondary)' }}>
               International-grade Watch & Earn platform. Verifiable advertiser engagement, prompt PKR payouts, and zero hidden tricks.

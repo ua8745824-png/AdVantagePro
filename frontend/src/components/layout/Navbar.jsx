@@ -31,16 +31,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 group focus:outline-none">
-            <NovyraLogo className="w-10 h-10 transition-transform duration-300 group-hover:scale-105" />
-            <div className="flex flex-col">
-              <span className="font-heading font-black text-2xl tracking-wider bg-gradient-to-r from-violet-400 via-indigo-300 to-amber-300 bg-clip-text text-transparent">
-                NOVYRA
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 -mt-1">
-                Watch. Complete. Earn.
-              </span>
-            </div>
+          <Link to="/" className="flex items-center focus:outline-none">
+            <NovyraLogo size="md" showText={true} showTagline={true} />
           </Link>
 
           {/* Desktop Navigation Links */}

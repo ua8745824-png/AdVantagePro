@@ -1,9 +1,14 @@
 import React from 'react';
 
+/**
+ * Official NOVYRA Brand Logo Component
+ * Renders the official 3D Emerald Hexagonal Shield Emblem and Typography.
+ */
 export default function NovyraLogo({ 
   size = 'md', 
   showText = false, 
   showTagline = false, 
+  variant = 'auto', // 'auto' | 'emblem' | 'full'
   className = '' 
 }) {
   const iconSizes = {
@@ -11,106 +16,81 @@ export default function NovyraLogo({
     sm: 'w-8 h-8',
     md: 'w-10 h-10',
     lg: 'w-12 h-12',
-    xl: 'w-16 h-16'
+    xl: 'w-16 h-16',
+    '2xl': 'w-24 h-24',
+    hero: 'w-36 h-36'
   };
 
   const textSizes = {
     xs: 'text-base',
-    sm: 'text-xl',
+    sm: 'text-lg',
     md: 'text-2xl',
     lg: 'text-3xl',
-    xl: 'text-4xl'
+    xl: 'text-4xl',
+    '2xl': 'text-5xl',
+    hero: 'text-6xl'
   };
 
-  const svgElement = (
-    <svg 
-      viewBox="0 0 100 100" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-full select-none transition-all duration-300"
-      style={{ filter: 'drop-shadow(var(--theme-glow))' }}
-    >
-      <defs>
-        <linearGradient id="novyra-shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="var(--theme-primary)" />
-          <stop offset="50%" stopColor="var(--theme-secondary)" />
-          <stop offset="100%" stopColor="var(--theme-primary)" />
-        </linearGradient>
-        <linearGradient id="novyra-n-grad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="var(--theme-primary)" />
-          <stop offset="60%" stopColor="var(--theme-secondary)" />
-          <stop offset="100%" stopColor="#ffffff" />
-        </linearGradient>
-        <radialGradient id="novyra-bg-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--theme-primary)" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="var(--theme-bg-surface)" stopOpacity="0.9" />
-        </radialGradient>
-      </defs>
-
-      {/* Hexagonal Shield Foundation */}
-      <polygon 
-        points="50,4 92,26 92,74 50,96 8,74 8,26" 
-        stroke="url(#novyra-shield-grad)" 
-        strokeWidth="4.5" 
-        strokeLinejoin="round"
-        fill="url(#novyra-bg-glow)" 
-      />
-
-      {/* Inner Accent Facets */}
-      <polygon 
-        points="50,14 82,31 82,69 50,86 18,69 18,31" 
-        stroke="url(#novyra-shield-grad)" 
-        strokeWidth="1.2" 
-        strokeOpacity="0.4"
-        fill="none" 
-      />
-
-      {/* Geometric 'N' Monogram */}
-      <path 
-        d="M28 72 V28 L50 56 L72 28 V72" 
-        stroke="url(#novyra-n-grad)" 
-        strokeWidth="7" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-      />
-
-      {/* Verified Core Spark / Radiant Node */}
-      <circle cx="50" cy="56" r="3.5" fill="var(--theme-secondary)" className="animate-pulse" />
-      <circle cx="72" cy="28" r="3" fill="var(--theme-primary)" />
-      <circle cx="28" cy="28" r="3" fill="var(--theme-primary)" />
-    </svg>
-  );
-
-  // If used purely as an icon / emblem
-  if (!showText) {
+  // If user requests the complete full graphic badge
+  if (variant === 'full') {
     return (
-      <div className={`inline-flex items-center justify-center shrink-0 ${iconSizes[size] || ''} ${className}`}>
-        {svgElement}
+      <div className={`inline-flex flex-col items-center justify-center select-none ${className}`}>
+        <img 
+          src="/novyra-logo.png" 
+          alt="NOVYRA - Watch. Complete. Earn." 
+          className={`object-contain transition-transform duration-300 hover:scale-105 filter drop-shadow-[0_8px_24px_rgba(0,229,153,0.3)] ${
+            size === 'hero' ? 'max-w-[320px] w-full' : size === 'xl' ? 'w-48' : 'w-36'
+          }`}
+          loading="eager"
+        />
       </div>
     );
   }
 
-  // If used as full logo with text
+  const emblemImage = (
+    <div className="relative inline-flex items-center justify-center shrink-0">
+      <img 
+        src="/novyra-icon.png" 
+        alt="NOVYRA" 
+        className="w-full h-full object-contain filter drop-shadow-[0_4px_16px_rgba(0,229,153,0.35)] transition-transform duration-300 group-hover:scale-105"
+        loading="eager"
+      />
+    </div>
+  );
+
+  // If used purely as an icon / emblem
+  if (!showText && variant !== 'full') {
+    return (
+      <div className={`inline-flex items-center justify-center shrink-0 ${iconSizes[size] || iconSizes.md} ${className}`}>
+        {emblemImage}
+      </div>
+    );
+  }
+
+  // If used as logo with typography
   return (
-    <div className={`inline-flex items-center gap-3 select-none ${className}`}>
+    <div className={`inline-flex items-center gap-3 select-none group ${className}`}>
       <div className={`shrink-0 ${iconSizes[size] || iconSizes.md}`}>
-        {svgElement}
+        {emblemImage}
       </div>
 
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center text-left">
         <span 
           className={`font-heading font-black tracking-wider leading-none ${textSizes[size] || textSizes.md}`}
           style={{
-            background: 'var(--theme-gradient-brand)',
+            background: 'linear-gradient(135deg, #00E599 0%, #00B377 50%, #008055 100%)',
             WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
+            WebkitTextFillColor: 'transparent',
+            letterSpacing: '0.08em'
           }}
         >
           NOVYRA
         </span>
         {showTagline && (
-          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1 flex items-center gap-1.5">
+            <span className="inline-block w-2 h-[1.5px] bg-[#00E599]/60 rounded-full" />
             Watch. Complete. Earn.
+            <span className="inline-block w-2 h-[1.5px] bg-[#00E599]/60 rounded-full" />
           </span>
         )}
       </div>
