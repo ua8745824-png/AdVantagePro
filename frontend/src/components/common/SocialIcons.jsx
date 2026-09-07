@@ -77,6 +77,24 @@ export const TelegramIcon = ({ className = "w-5 h-5", size, withBadge = false })
 };
 
 /**
+ * Authentic WhatsApp Icon
+ */
+export const WhatsAppIcon = ({ className = "w-5 h-5", size }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    className={className}
+    style={size ? { width: size, height: size } : undefined}
+    fill="currentColor" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path 
+      d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.79 14.07c-.24.68-1.4 1.27-1.93 1.35-.49.07-1.12.1-3.26-.79-2.74-1.14-4.5-3.92-4.63-4.1-.14-.18-1.1-1.46-1.1-2.79 0-1.32.69-1.97.94-2.24.25-.26.54-.33.72-.33.18 0 .36 0 .52.01.17.01.4.06.62.59.24.57.8 1.95.87 2.09.07.14.12.31.02.5-.09.18-.14.3-.28.46-.14.17-.29.37-.42.5-.14.14-.29.29-.12.58.17.29.74 1.22 1.58 1.97 1.09.97 2.01 1.27 2.29 1.41.28.14.45.12.62-.07.17-.19.72-.84.91-1.13.19-.29.38-.24.64-.14.26.1 1.65.78 1.93.92.28.14.47.21.54.33.07.12.07.69-.17 1.37z" 
+      fill="#25D366" 
+    />
+  </svg>
+);
+
+/**
  * Modern High-Contrast Email / Envelope Icon
  */
 export const EmailIcon = ({ className = "w-5 h-5", size }) => (
@@ -99,5 +117,6 @@ export const EmailIcon = ({ className = "w-5 h-5", size }) => (
 export default {
   Google: GoogleIcon,
   Telegram: TelegramIcon,
+  WhatsApp: WhatsAppIcon,
   Email: EmailIcon
 };
