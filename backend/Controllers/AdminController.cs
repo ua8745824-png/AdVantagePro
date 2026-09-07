@@ -335,6 +335,83 @@ public class AdminController : ControllerBase
         return Ok(ApiResponse.Ok("Payment method updated successfully."));
     }
 
+    [HttpPost("payment-methods")]
+    public async Task<IActionResult> CreatePaymentMethod([FromBody] PaymentMethodDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Name) || string.IsNullOrWhiteSpace(dto.Type))
+        {
+            return BadRequest(ApiResponse.Fail("Payment method name and type are required."));
+        }
+
+        var method = new PaymentMethod
+        {
+            Name = dto.Name,
+            Type = dto.Type,
+            QrCodePath = dto.QrCodePath,
+            AccountTitle = dto.AccountTitle,
+            AccountNumber = dto.AccountNumber,
+            BankName = dto.BankName,
+            Iban = dto.Iban,
+            Instructions = dto.Instructions,
+            MinDeposit = dto.MinDeposit > 0 ? dto.MinDeposit : 100.00m,
+            MaxDeposit = dto.MaxDeposit > 0 ? dto.MaxDeposit : 500000.00m,
+            MinWithdrawal = dto.MinWithdrawal > 0 ? dto.MinWithdrawal : 500.00m,
+            MaxWithdrawal = dto.MaxWithdrawal > 0 ? dto.MaxWithdrawal : 100000.00m,
+            IsEnabled = dto.IsEnabled,
+            DisplayOrder = dto.DisplayOrder,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        await _db.PaymentMethods.AddAsync(method);
+        await _db.SaveChangesAsync();
+
+        return Ok(ApiResponse<PaymentMethodDto>.Ok(new PaymentMethodDto
+        {
+            Id = method.Id,
+            Name = method.Name,
+            Type = method.Type,
+            QrCodePath = method.QrCodePath,
+            AccountTitle = method.AccountTitle,
+            AccountNumber = method.AccountNumber,
+            BankName = method.BankName,
+            Iban = method.Iban,
+            Instructions = method.Instructions,
+            MinDeposit = method.MinDeposit,
+            MaxDeposit = method.MaxDeposit,
+            MinWithdrawal = method.MinWithdrawal,
+            MaxWithdrawal = method.MaxWithdrawal,
+            IsEnabled = method.IsEnabled,
+            DisplayOrder = method.DisplayOrder
+        }, "Payment method created successfully."));
+    }
+
+    [HttpDelete("payment-methods/{id}")]
+    public async Task<IActionResult> DeletePaymentMethod(int id)
+    {
+        var method = await _db.PaymentMethods.FindAsync(id);
+        if (method == null)
+        {
+            return NotFound(ApiResponse.Fail("Payment method not found."));
+        }
+
+        // Check if referenced by deposits or withdrawals
+        var hasDeposits = await _db.Deposits.AnyAsync(d => d.PaymentMethodId == id);
+        var hasWithdrawals = await _db.Withdrawals.AnyAsync(w => w.PaymentMethodId == id);
+
+        if (hasDeposits || hasWithdrawals)
+        {
+            // Soft-disable if referenced
+            method.IsEnabled = false;
+            method.UpdatedAt = DateTime.UtcNow;
+            await _db.SaveChangesAsync();
+            return Ok(ApiResponse.Ok("Payment method has existing transaction history and was deactivated instead of permanently deleted."));
+        }
+
+        _db.PaymentMethods.Remove(method);
+        await _db.SaveChangesAsync();
+        return Ok(ApiResponse.Ok("Payment method deleted successfully."));
+    }
+
     [HttpPost("payment-methods/upload-qr")]
     public async Task<IActionResult> UploadQrCode([FromForm] IFormFile file)
     {
