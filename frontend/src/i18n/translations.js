@@ -1,0 +1,80 @@
+export const translations = {
+  en: {
+    dir: 'ltr',
+    brand: 'NOVYRA',
+    tagline: 'Watch. Complete. Earn.',
+    nav: {
+      home: 'Home',
+      howItWorks: 'How It Works',
+      about: 'About Us',
+      tasks: 'Sponsored Tasks',
+      calculator: 'Calculator',
+      faq: 'FAQ',
+      contact: 'Contact',
+      terms: 'Terms',
+      privacy: 'Privacy',
+      login: 'Sign In',
+      register: 'Get Started',
+      dashboard: 'Dashboard',
+    },
+    hero: {
+      badge: 'Enterprise Task & Video Engagement',
+      title: 'Monetize Your Time with Verified Brand Campaigns',
+      subtitle: 'Engage with premium sponsored content, complete structured micro-tasks, and track verified rewards in PKR seamlessly.',
+      ctaPrimary: 'Start Earning Now',
+      ctaSecondary: 'Explore How It Works',
+    }
+  },
+  ur: {
+    dir: 'rtl',
+    brand: 'نوویرا',
+    tagline: 'دیکھیں • مکمل کریں • کمائیں',
+    nav: {
+      home: 'صفحہ اول',
+      howItWorks: 'طریقہ کار',
+      about: 'ہمارے بارے میں',
+      tasks: 'ٹاسکس',
+      calculator: 'کیلکولیٹر',
+      faq: 'سوالات',
+      contact: 'رابطہ کریں',
+      terms: 'شرائط و ضوابط',
+      privacy: 'رازداری کی پالیسی',
+      login: 'لاگ ان',
+      register: 'اکاؤنٹ بنائیں',
+      dashboard: 'ڈیش بورڈ',
+    },
+    hero: {
+      badge: 'مصدقہ ڈیجیٹل ٹاسک و ویڈیو پلیٹ فارم',
+      title: 'اپنے وقت کو بامقصد بنائیں اور انعامات حاصل کریں',
+      subtitle: 'اسپانسر شدہ مواد دیکھیں، تصدیق شدہ ٹاسک مکمل کریں اور آسانی کے ساتھ اپنی کمائی کا انتظام کریں۔',
+      ctaPrimary: 'ابھی شروع کریں',
+      ctaSecondary: 'طریقہ کار جانیں',
+    }
+  },
+  roman: {
+    dir: 'ltr',
+    brand: 'NOVYRA',
+    tagline: 'Dekhein • Mukammal Karein • Kamayein',
+    nav: {
+      home: 'Home',
+      howItWorks: 'Tareeqa Kar',
+      about: 'Humare Baare Mein',
+      tasks: 'Tasks',
+      calculator: 'Calculator',
+      faq: 'Sawal Jawab',
+      contact: 'Raabta Karein',
+      terms: 'Sharait',
+      privacy: 'Privacy',
+      login: 'Sign In',
+      register: 'Account Banayein',
+      dashboard: 'Dashboard',
+    },
+    hero: {
+      badge: 'Verified Digital Rewards Platform',
+      title: 'Apna Waqt Faidamand Banayein Aur Rewards Hasil Karein',
+      subtitle: 'Sponsored videos dekhein, structured tasks poore karein aur asani se rewards track karein.',
+      ctaPrimary: 'Abhi Shuru Karein',
+      ctaSecondary: 'Tareeqa Samjhein',
+    }
+  }
+};
